@@ -1,43 +1,47 @@
 import { eq } from 'drizzle-orm';
 import { db } from './db/index.js';
-import { demoUsers } from 'src/db/schema/index.js';
+import { departments } from './db/schema/index.js';
 
 async function main() {
   try {
     console.log('Performing CRUD operations...');
 
-    // CREATE: Insert a new user
-    const [newUser] = await db
-      .insert(demoUsers)
-      .values({ name: 'Admin User', email: 'admin@example.com' })
+    // CREATE: Insert a new department
+    const [newDept] = await db
+      .insert(departments)
+      .values({ 
+        code: 'CS', 
+        name: 'Computer Science', 
+        description: 'Computer Science Department' 
+      })
       .returning();
 
-    if (!newUser) {
-      throw new Error('Failed to create user');
+    if (!newDept) {
+      throw new Error('Failed to create department');
     }
+    
+    console.log('✅ CREATE: New department created:', newDept);
 
-    console.log('✅ CREATE: New user created:', newUser);
+    // READ: Select the department
+    const foundDept = await db.select().from(departments).where(eq(departments.id, newDept.id));
+    console.log('✅ READ: Found department:', foundDept[0]);
 
-    // READ: Select the user
-    const foundUser = await db.select().from(demoUsers).where(eq(demoUsers.id, newUser.id));
-    console.log('✅ READ: Found user:', foundUser[0]);
-
-    // UPDATE: Change the user's name
-    const [updatedUser] = await db
-      .update(demoUsers)
-      .set({ name: 'Super Admin' })
-      .where(eq(demoUsers.id, newUser.id))
+    // UPDATE: Change the department's name
+    const [updatedDept] = await db
+      .update(departments)
+      .set({ name: 'Computer Science & Engineering' })
+      .where(eq(departments.id, newDept.id))
       .returning();
-
-    if (!updatedUser) {
-      throw new Error('Failed to update user');
+    
+    if (!updatedDept) {
+      throw new Error('Failed to update department');
     }
+    
+    console.log('✅ UPDATE: Department updated:', updatedDept);
 
-    console.log('✅ UPDATE: User updated:', updatedUser);
-
-    // DELETE: Remove the user
-    await db.delete(demoUsers).where(eq(demoUsers.id, newUser.id));
-    console.log('✅ DELETE: User deleted.');
+    // DELETE: Remove the department
+    await db.delete(departments).where(eq(departments.id, newDept.id));
+    console.log('✅ DELETE: Department deleted.');
 
     console.log('\nCRUD operations completed successfully.');
   } catch (error) {
