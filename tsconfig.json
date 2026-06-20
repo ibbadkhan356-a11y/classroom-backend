@@ -1,34 +1,13 @@
 {
   "compilerOptions": {
-    /* Language & runtime */
     "target": "ES2022",
-    "lib": ["ES2022"],
-
-    /* Node ESM */
-    "module": "ES2022",
-    "moduleResolution": "node",
-
-    /* Project structure */
-    "rootDir": "src",
-    "outDir": "dist",
-
-    /* Type safety */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-
-    /* Interop & correctness */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    /* Build output */
-    "sourceMap": true,
-
-    /* Performance */
+    "strict": true,
     "skipLibCheck": true,
-
-    /* Environment types */
+    "outDir": "./dist",
     "types": ["node"]
   },
-  "include": ["src"]
+  "include": ["src/**/*", "drizzle.config.ts"],
 }
