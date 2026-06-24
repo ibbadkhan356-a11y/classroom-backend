@@ -4,10 +4,15 @@ import cors from 'cors';
 import  subjectsRouter  from './routes/subjects.js';
 
 const app = express();
-const PORT = 8000;
+const PORT = Number(process.env.PORT ?? 8000);
+const FRONTEND_URL = process.env.FRONTEND_URL;
+
+if (!FRONTEND_URL) {
+ throw new Error("FRONTEND_URL is required");
+}
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: FRONTEND_URL,
   methods:['GET','POST','PUT','DELETE'],
   credentials: true
 }))
