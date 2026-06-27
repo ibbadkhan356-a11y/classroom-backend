@@ -8,6 +8,13 @@
       "when": 1781978856268,
       "tag": "0000_wise_viper",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782555522890,
+      "tag": "0001_simple_the_call",
+      "breakpoints": true
     }
   ]
 }
