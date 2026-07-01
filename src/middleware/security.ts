@@ -26,7 +26,7 @@ const securityMiddleware =
                     break;
 
                 default:
-                    limit = 5;
+                    limit = 100;
                     message = 'Guest request limit exceeded (5 per minute). please sign up for higher limit'
                     break;
 
