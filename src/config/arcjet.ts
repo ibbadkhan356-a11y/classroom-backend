@@ -1,6 +1,6 @@
-import arcjet, { shield, detectBot, slidingWindow } from "@arcjet/node";
+import arcjet, {shield, detectBot, slidingWindow} from "@arcjet/node";
 
-if (!process.env.ARCJET_KEY && process.env.NODE_ENV !== 'test')
+if(!process.env.ARCJET_KEY && process.env.NODE_ENV !== 'test') 
   throw new Error("Arcjet key not found");
 
 
@@ -24,9 +24,9 @@ const aj = arcjet({
       ],
     }),
     slidingWindow({
-      mode: 'LIVE',
-      interval: '60s',
-      max: 1000,
+        mode : 'LIVE',
+        interval: '2s',
+        max: 5,
     })
   ],
 })
