@@ -3,12 +3,14 @@ import { isMissingUserAgent } from '@arcjet/inspect';
 import aj from '../config/arcjet.js'
 import type { Request, Response, NextFunction } from "express"
 
+type RateLimitRole = 'admin' | 'teacher' | 'student' | 'guest';
+
 const securityMiddleware =
   async (req: Request, res: Response, next: NextFunction) => {
     if (process.env.NODE_ENV === 'test') return next();
 
     try {
-      const role: RateLimitRole = req.user?.role ?? 'guest';
+      const role: RateLimitRole = (req.user?.role as RateLimitRole) ?? 'guest';
 
       let limit: number;
       let message: string;
