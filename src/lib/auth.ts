@@ -27,5 +27,12 @@ export const auth = betterAuth({
                 type: 'string', required: false, input: true,
             }
         }
+    },
+    advanced: {
+        defaultCookieAttributes: {
+            sameSite: "none",
+            secure: true,
+            partitioned: true,
+        }
     }
 });
