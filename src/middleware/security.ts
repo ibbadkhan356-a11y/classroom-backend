@@ -2,6 +2,8 @@ import { ArcjetNodeRequest, slidingWindow } from '@arcjet/node';
 import { isMissingUserAgent } from '@arcjet/inspect';
 import aj from '../config/arcjet.js'
 import type { Request, Response, NextFunction } from "express"
+import { auth } from "../lib/auth.js";
+import { fromNodeHeaders } from "better-auth/node";
 
 type RateLimitRole = 'admin' | 'teacher' | 'student' | 'guest';
 
@@ -10,7 +12,10 @@ const securityMiddleware =
     if (process.env.NODE_ENV === 'test') return next();
 
     try {
-      const role: RateLimitRole = (req.user?.role as RateLimitRole) ?? 'guest';
+      const session = await auth.api.getSession({
+          headers: fromNodeHeaders(req.headers)
+      });
+      const role: RateLimitRole = (session?.user?.role as RateLimitRole) ?? 'guest';
 
       let limit: number;
       let message: string;
